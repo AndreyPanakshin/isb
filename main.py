@@ -1,3 +1,5 @@
+import config
+
 def method_atbash(original_text: str, alphabet_upper: str, alphabet_lower: str) -> str:
     try:
         if not original_text or not alphabet_upper or not alphabet_lower:
@@ -38,11 +40,8 @@ def write_file(file_name: str, text: str):
 
 
 if __name__ == '__main__':
-    text_file = 'original.txt'
-    alphabet_file = 'alphabet.txt'
-
-    text = read_file(text_file)
-    alphabet = read_file(alphabet_file)
+    text = read_file(config.TEXT_FILE)
+    alphabet = read_file(config.ALPHABET_FILE)
 
     if text.startswith("Ошибка") or alphabet.startswith("Ошибка"):
         print(text if text.startswith("Ошибка") else alphabet)
@@ -52,6 +51,6 @@ if __name__ == '__main__':
 
         encrypted_text = method_atbash(text, alphabet_upper,alphabet_lower)
 
-        write_file('encoded.txt', encrypted_text)
+        write_file(config.ENCRYPTED_TEXT_FILE, encrypted_text)
 
         print("Шифрование завершено. Зашифрованный текст сохранен в 'encoded_message.txt'.")
