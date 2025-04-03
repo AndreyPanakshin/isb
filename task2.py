@@ -1,6 +1,7 @@
 import json
 import os
 import read as r
+import config
 
 
 def load_json(file_path: str) -> dict:
@@ -51,22 +52,15 @@ def decrypt_text(text: str, key: dict[str, str]) -> str:
     return ''.join(key.get(char, char) for char in text)
 
 if __name__ == "__main__":
-    encrypted_text_file = "encoded_task2.txt"
-    decrypted_text_file = "decrypted_task2.txt"
-    reference_freq_file = "probability_letters.txt"
-    encrypted_freq_file = "frequency.json"
-    decryption_key_file = "key.json"
 
-
-
-    encrypted_text = r.read(encrypted_text_file)
+    encrypted_text = r.read(config.ENCODED_TASK2_FILE)
 
     if not encrypted_text:
         print("Ошибка: зашифрованный текст отсутствует!")
         exit(1)
 
 
-    reference_frequency = load_json(reference_freq_file)
+    reference_frequency = load_json(config.REFERENCE_FREQ_FILE)
 
     if not reference_frequency:
         print("Ошибка: не удалось загрузить частотный анализ языка!")
@@ -75,7 +69,7 @@ if __name__ == "__main__":
 
     encrypted_frequency = analyze_frequency(encrypted_text)
 
-    save_json(encrypted_frequency, encrypted_freq_file)
+    save_json(encrypted_frequency, config.ENCRYPTED_FREQ_FILE)
 
 
     decryption_key = create_decryption_key(encrypted_frequency, reference_frequency)
@@ -84,9 +78,9 @@ if __name__ == "__main__":
     decrypted_text = decrypt_text(encrypted_text, decryption_key)
 
 
-    save_json(decryption_key, decryption_key_file)
-    r.write(decrypted_text, decrypted_text_file)
+    save_json(decryption_key, config.DECRYPTION_KEY_FILE)
+    r.write(decrypted_text, config.DECRYPTED_TASK2_FILE)
 
     print("\n расшифровка завершена!")
-    print("Ключ сохранен в:", decryption_key_file)
-    print("расшифрованный текст сохранен в:", decrypted_text_file)
+    print("Ключ сохранен в:", config.DECRYPTION_KEY_FILE)
+    print("расшифрованный текст сохранен в:", config.DECRYPTED_TASK2_FILE)
