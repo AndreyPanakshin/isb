@@ -1,4 +1,5 @@
 import config
+import read as r
 
 def method_atbash(original_text: str, alphabet_upper: str, alphabet_lower: str) -> str:
     try:
@@ -6,7 +7,7 @@ def method_atbash(original_text: str, alphabet_upper: str, alphabet_lower: str) 
             return "Отсутствует текст или алфавит"
 
         encrypted_text = ""
-        for let in text:
+        for let in original_text:
             if let.isupper() and let in alphabet_upper:
                 i = alphabet_upper.index(let)
                 encrypted_text += alphabet_upper[-i - 1]
@@ -21,27 +22,9 @@ def method_atbash(original_text: str, alphabet_upper: str, alphabet_lower: str) 
         return f"Ошибка: {e}"
 
 
-def read_file(file_name: str) -> str:
-    try:
-        with open(file_name, 'r', encoding='utf-8') as file:
-            return file.read()
-    except FileNotFoundError:
-        return f"Файл {file_name} не найден!"
-    except Exception as e:
-        return f"Ошибка при чтении файла {file_name}: {e}"
-
-
-def write_file(file_name: str, text: str):
-    try:
-        with open(file_name, 'w', encoding='utf-8') as file:
-            file.write(text)
-    except Exception as e:
-        print(f"Ошибка при записи в файл {file_name}: {e}")
-
-
 if __name__ == '__main__':
-    text = read_file(config.TEXT_FILE)
-    alphabet = read_file(config.ALPHABET_FILE)
+    text = r.read(config.TEXT_FILE)
+    alphabet = r.read(config.ALPHABET_FILE)
 
     if text.startswith("Ошибка") or alphabet.startswith("Ошибка"):
         print(text if text.startswith("Ошибка") else alphabet)
@@ -51,6 +34,6 @@ if __name__ == '__main__':
 
         encrypted_text = method_atbash(text, alphabet_upper,alphabet_lower)
 
-        write_file(config.ENCRYPTED_TEXT_FILE, encrypted_text)
+        r.write(config.ENCRYPTED_TEXT_FILE, encrypted_text)
 
         print("Шифрование завершено. Зашифрованный текст сохранен в 'encoded_message.txt'.")
