@@ -80,7 +80,7 @@ if __name__ == "__main__":
 
 
     save_json(decryption_key, config.DECRYPTION_KEY_FILE)
-    r.write(decrypted_text, config.DECRYPTED_TASK2_FILE)
+    r.write(config.DECRYPTED_TASK2_FILE,decrypted_text)
 
     print("\n расшифровка завершена!")
     print("Ключ сохранен в:", config.DECRYPTION_KEY_FILE)
