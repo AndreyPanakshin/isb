@@ -61,21 +61,22 @@ if __name__ == "__main__":
 
 
     reference_frequency = load_json(config.REFERENCE_FREQ_FILE)
+    
+    key_final=load_json(config.FINAL_KEY_FILE)
+
 
     if not reference_frequency:
         print("Ошибка: не удалось загрузить частотный анализ языка!")
         exit(1)
 
-
     encrypted_frequency = analyze_frequency(encrypted_text)
 
     save_json(encrypted_frequency, config.ENCRYPTED_FREQ_FILE)
 
+    decryption_key = create_decryption_key(encrypted_frequency,reference_frequency)
 
-    decryption_key = create_decryption_key(encrypted_frequency, reference_frequency)
 
-
-    decrypted_text = decrypt_text(encrypted_text, decryption_key)
+    decrypted_text = decrypt_text(encrypted_text, key_final)
 
 
     save_json(decryption_key, config.DECRYPTION_KEY_FILE)
