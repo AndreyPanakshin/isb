@@ -41,13 +41,6 @@ def analyze_frequency(text: str) -> dict[str, float]:
     return dict(sorted(frequency.items(), key=lambda item: item[1], reverse=True))
 
 
-def create_decryption_key(encrypted_freq: dict, reference_freq: dict) -> dict[str, str]:
-    sorted_encrypted = sorted(encrypted_freq.keys(), key=lambda c: encrypted_freq[c], reverse=True)
-    sorted_reference = sorted(reference_freq.keys(), key=lambda c: reference_freq[c], reverse=True)
-
-    return {enc: ref for enc, ref in zip(sorted_encrypted, sorted_reference)}
-
-
 def decrypt_text(text: str, key: dict[str, str]) -> str:
     return ''.join(key.get(char, char) for char in text)
 
@@ -73,13 +66,13 @@ if __name__ == "__main__":
 
     save_json(encrypted_frequency, config.ENCRYPTED_FREQ_FILE)
 
-    decryption_key = create_decryption_key(encrypted_frequency,reference_frequency)
+    
 
 
     decrypted_text = decrypt_text(encrypted_text, key_final)
 
 
-    save_json(decryption_key, config.DECRYPTION_KEY_FILE)
+
     r.write(config.DECRYPTED_TASK2_FILE,decrypted_text)
 
     print("\n расшифровка завершена!")
