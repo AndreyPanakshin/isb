@@ -1,15 +1,16 @@
-def read(file_path: str) -> str:
+def read(file_name: str) -> str:
     try:
-        with open(file_path, "r", encoding="utf-8") as file:
+        with open(file_name, 'r', encoding='utf-8') as file:
             return file.read().strip()
+    except FileNotFoundError:
+        return f"Файл {file_name} не найден!"
     except Exception as e:
-        print(f"Ошибка при чтении файла {file_path}: {e}")
-        return ""
+        return f"Ошибка при чтении файла {file_name}: {e}"
 
 
-def write(data: str, file_path: str) -> None:
+def write(file_name: str, text: str):
     try:
-        with open(file_path, "w", encoding="utf-8") as file:
-            file.write(data)
+        with open(file_name, 'w', encoding='utf-8') as file:
+            file.write(text)
     except Exception as e:
-        print(f"Ошибка при записи в файл {file_path}: {e}")
+        print(f"Ошибка при записи в файл {file_name}: {e}")
